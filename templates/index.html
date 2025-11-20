@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فحص الأعراض الذكي</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <header>
+        <h1>فحص الأعراض الذكي</h1>
+    </header>
+
+    <main>
+        <div class="chat-container">
+            <div class="chat-box" id="chat">
+                {% for user_msg, bot_msg in chats %}
+                    <div class="bubble user"><strong>أنت:</strong> {{ user_msg }}</div>
+                    {% if bot_msg %}
+                        <div class="bubble ai"><strong>البوت:</strong> {{ bot_msg }}</div>
+                    {% endif %}
+                {% endfor %}
+
+                {% if completed %}
+                    <div class="bubble ai">
+                        شكرًا لك تم تسجيل كل إجاباتك بنجاح<br>
+                        <strong>التقرير جاهز وهيتبعتلك على الواتساب خلال دقايق</strong>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="input-area">
+                <form method="POST">
+                    {% if pending %}
+                        <div class="bubble ai">{{ current_question }}</div>
+                        <div class="options">
+                            {% for opt in options %}
+                                <button type="submit" name="answer" value="{{ opt }}">{{ opt }}</button>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <textarea name="symptoms" placeholder="اكتب الأعراض اللي حاسس بيها دلوقتي..." 
+                                  rows="3" required>{{ draft }}</textarea>
+                        <button type="submit">إرسال</button>
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        © 2025 Symptom Checker Arabic • كل الحقوق محفوظة
+    </footer>
+</body>
+</html>
